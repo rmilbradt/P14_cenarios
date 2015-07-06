@@ -1,9 +1,6 @@
 package br.ufsm.csi.p14.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by politecnico on 26/05/2015.
@@ -21,6 +18,16 @@ public class Produtor {
     private String tensaoNominal;
     private Float consumo;
     private Float consumoMinimo;
+    @Transient
+    private RegimeOperacional regime;
+
+    public RegimeOperacional getRegime() {
+        return regime;
+    }
+
+    public void setRegime(RegimeOperacional regime) {
+        this.regime = regime;
+    }
 
     public Long getId() {
         return id;
@@ -69,4 +76,24 @@ public class Produtor {
     public void setConsumoMinimo(Float consumoMinimo) {
         this.consumoMinimo = consumoMinimo;
     }
+
+    @Transient
+    public Float getCusto() {
+        if (getConsumo() > 500f) {
+            return (getConsumo() - 500f * getRegime().getCustos().getCustoKWhAcima500()) + 500f * getRegime().getCustos().getCustoKWhPrimeiros500();
+        } else {
+            return getConsumo() * getRegime().getCustos().getCustoKWhPrimeiros500();
+        }
+    }
+
+    @Transient
+    public Float getCotaParte() {
+        return null;
+    }
+
+    @Transient
+    public Float getCustoDisponibilidade() {
+        return null;
+    }
+
 }

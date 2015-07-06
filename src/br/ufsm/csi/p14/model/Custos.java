@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table
-public class Tributos {
+public class Custos {
 
     @Id
     @GeneratedValue
@@ -20,6 +20,24 @@ public class Tributos {
     private Float cofins;
     private Float icmsMenos500;
     private Float icmsMais500;
+    private Float custoKWhPrimeiros500;
+    private Float custoKWhAcima500;
+
+    public Float getCustoKWhPrimeiros500() {
+        return custoKWhPrimeiros500;
+    }
+
+    public void setCustoKWhPrimeiros500(Float custoKWhPrimeiros500) {
+        this.custoKWhPrimeiros500 = custoKWhPrimeiros500;
+    }
+
+    public Float getCustoKWhAcima500() {
+        return custoKWhAcima500;
+    }
+
+    public void setCustoKWhAcima500(Float custoKWhAcima500) {
+        this.custoKWhAcima500 = custoKWhAcima500;
+    }
 
     public Long getId() {
         return id;

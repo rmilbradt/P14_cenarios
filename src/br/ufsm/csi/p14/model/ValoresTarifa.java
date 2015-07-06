@@ -13,26 +13,28 @@ public class ValoresTarifa {
     @GeneratedValue
     private Long id;
 
+    //verde, azul ou convencional
     private String nomeTarifa;
     private Float demanda;
     private Float energiaBandVerde;
     private Float energiaBandAmarela;
     private Float energiaBandVermelha;
+
+    //na, ponta e fora de ponta
     private String tipoCusto;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_TRIBUTOS")
-    private Tributos tributos;
+    @Transient
+    private Custos custos;
 
     enum NomesTarifas { VERDE, AZUL, CONVENCIONAL }
     enum TiposCusto { NA, PONTA, FORA_PONTA }
 
-    public Tributos getTributos() {
-        return tributos;
+    public Custos getCustos() {
+        return custos;
     }
 
-    public void setTributos(Tributos tributos) {
-        this.tributos = tributos;
+    public void setCustos(Custos custos) {
+        this.custos = custos;
     }
 
     public Long getId() {
@@ -93,23 +95,22 @@ public class ValoresTarifa {
 
     @Transient
     public Float getValorFinalDemanda() {
-        return null;
+        return getDemanda() / ((100f - (getCustos().getCofins() + getCustos().getPis() + getCustos().getIcmsMenos500())) / 100f);
     }
 
     @Transient
     public Float getValorFinalEnergiaBandVerde() {
-        return null;
+        return getEnergiaBandVerde() / ((100f - (getCustos().getCofins() + getCustos().getPis() + getCustos().getIcmsMenos500())) / 100f);
     }
 
     @Transient
     public Float getValorFinalEnergiaBandAmarela() {
-        return null;
+        return getEnergiaBandAmarela() / ((100f - (getCustos().getCofins() + getCustos().getPis() + getCustos().getIcmsMenos500())) / 100f);
     }
 
     @Transient
     public Float getValorFinalEnergiaBandVermelha() {
-        return null;
+        return getEnergiaBandVermelha() / ((100f - (getCustos().getCofins() + getCustos().getPis() + getCustos().getIcmsMenos500())) / 100f);
     }
-
 
 }

@@ -1,9 +1,7 @@
 package br.ufsm.csi.p14.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Map;
 
 /**
  * Created by politecnico on 03/07/2015.
@@ -18,6 +16,35 @@ public class RegimeOperacional {
     private String nome;
     private Float potencia;
     private Integer qtdHoras;
+    private Integer numProdutores;
+    @Transient
+    private Map<String, Map<String, ValoresTarifa>> valoresTarifa;
+    @Transient
+    private Custos custos;
+
+    public Map<String, Map<String, ValoresTarifa>> getValoresTarifa() {
+        return valoresTarifa;
+    }
+
+    public void setValoresTarifa(Map<String, Map<String, ValoresTarifa>> valoresTarifa) {
+        this.valoresTarifa = valoresTarifa;
+    }
+
+    public Custos getCustos() {
+        return custos;
+    }
+
+    public void setCustos(Custos custos) {
+        this.custos = custos;
+    }
+
+    public Integer getNumProdutores() {
+        return numProdutores;
+    }
+
+    public void setNumProdutores(Integer numProdutores) {
+        this.numProdutores = numProdutores;
+    }
 
     public Long getId() {
         return id;
@@ -50,4 +77,40 @@ public class RegimeOperacional {
     public void setQtdHoras(Integer qtdHoras) {
         this.qtdHoras = qtdHoras;
     }
+
+    @Transient
+    public Float getCustoDisponibilidadeAzul() {
+        if (getQtdHoras() == 24) {
+            return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.FORA_PONTA).getValorFinalDemanda()) +
+                    (getNumProdutores() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.PONTA).getValorFinalDemanda());
+        } else {
+            return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.FORA_PONTA).getValorFinalDemanda());
+        }
+    }
+
+    @Transient
+    public Float getCustoDisponibilidadeVerde() {
+        return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
+    }
+
+    @Transient
+    public Float getCustoDisponibilidadeConvencional() {
+        return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.CONVENCIONAL).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
+    }
+
+    @Transient
+    public Float getCotaParteAzul() {
+        return getCustoDisponibilidadeAzul() / getNumProdutores();
+    }
+
+    @Transient
+    public Float getCotaParteVerde() {
+        return getCustoDisponibilidadeVerde() / getNumProdutores();
+    }
+
+    @Transient
+    public Float getCotaParteConvencional() {
+        return getCustoDisponibilidadeConvencional() / getNumProdutores();
+    }
+
 }
