@@ -14,12 +14,42 @@ public class Produtor {
     private Long id;
 
     private String nome;
+
+    @Column(unique = true)
     private Long codigoUC;
     private String tensaoNominal;
     private Float consumo;
     private Float consumoMinimo;
     @Transient
     private RegimeOperacional regime;
+    @Transient
+    private Custos.BandeiraTarifaria bandeiraTarifaria;
+    private String grupoTensao;
+    private String classificacao;
+
+    public String getGrupoTensao() {
+        return grupoTensao;
+    }
+
+    public void setGrupoTensao(String grupoTensao) {
+        this.grupoTensao = grupoTensao;
+    }
+
+    public String getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(String classificacao) {
+        this.classificacao = classificacao;
+    }
+
+    public Custos.BandeiraTarifaria getBandeiraTarifaria() {
+        return bandeiraTarifaria;
+    }
+
+    public void setBandeiraTarifaria(Custos.BandeiraTarifaria bandeiraTarifaria) {
+        this.bandeiraTarifaria = bandeiraTarifaria;
+    }
 
     public RegimeOperacional getRegime() {
         return regime;
@@ -80,20 +110,20 @@ public class Produtor {
     @Transient
     public Float getCusto() {
         if (getConsumo() > 500f) {
-            return (getConsumo() - 500f * getRegime().getCustos().getCustoKWhAcima500()) + 500f * getRegime().getCustos().getCustoKWhPrimeiros500();
+            return (getConsumo() - 500f * getRegime().getCustos().getCustoKWhAcima500(getBandeiraTarifaria())) + 500f * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
         } else {
-            return getConsumo() * getRegime().getCustos().getCustoKWhPrimeiros500();
+            return getConsumo() * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
         }
     }
 
     @Transient
     public Float getCotaParte() {
-        return null;
+        return getRegime().getCotaParte() + getCustoDisponibilidade();
     }
 
     @Transient
     public Float getCustoDisponibilidade() {
-        return null;
+        return getConsumoMinimo() * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
     }
 
 }

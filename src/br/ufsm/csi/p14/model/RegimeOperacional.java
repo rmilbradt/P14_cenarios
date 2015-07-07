@@ -18,9 +18,19 @@ public class RegimeOperacional {
     private Integer qtdHoras;
     private Integer numProdutores;
     @Transient
+    private ValoresTarifa.NomesTarifas nomeTarifa;
+    @Transient
     private Map<String, Map<String, ValoresTarifa>> valoresTarifa;
     @Transient
     private Custos custos;
+
+    public ValoresTarifa.NomesTarifas getNomeTarifa() {
+        return nomeTarifa;
+    }
+
+    public void setNomeTarifa(ValoresTarifa.NomesTarifas nomeTarifa) {
+        this.nomeTarifa = nomeTarifa;
+    }
 
     public Map<String, Map<String, ValoresTarifa>> getValoresTarifa() {
         return valoresTarifa;
@@ -79,7 +89,7 @@ public class RegimeOperacional {
     }
 
     @Transient
-    public Float getCustoDisponibilidadeAzul() {
+    private Float getCustoDisponibilidadeAzul() {
         if (getQtdHoras() == 24) {
             return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.FORA_PONTA).getValorFinalDemanda()) +
                     (getNumProdutores() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.PONTA).getValorFinalDemanda());
@@ -89,28 +99,29 @@ public class RegimeOperacional {
     }
 
     @Transient
-    public Float getCustoDisponibilidadeVerde() {
+    private Float getCustoDisponibilidadeVerde() {
         return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
     }
 
     @Transient
-    public Float getCustoDisponibilidadeConvencional() {
+    private Float getCustoDisponibilidadeConvencional() {
         return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.CONVENCIONAL).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
     }
 
     @Transient
-    public Float getCotaParteAzul() {
-        return getCustoDisponibilidadeAzul() / getNumProdutores();
+    public Float getCustoDisponibilidade() {
+        if (nomeTarifa == ValoresTarifa.NomesTarifas.AZUL) {
+            return getCustoDisponibilidadeAzul();
+        } else if (nomeTarifa == ValoresTarifa.NomesTarifas.VERDE) {
+            return getCustoDisponibilidadeVerde();
+        } else {
+            return getCustoDisponibilidadeConvencional();
+        }
     }
 
     @Transient
-    public Float getCotaParteVerde() {
-        return getCustoDisponibilidadeVerde() / getNumProdutores();
-    }
-
-    @Transient
-    public Float getCotaParteConvencional() {
-        return getCustoDisponibilidadeConvencional() / getNumProdutores();
+    public Float getCotaParte() {
+        return getCustoDisponibilidade() / getNumProdutores();
     }
 
 }

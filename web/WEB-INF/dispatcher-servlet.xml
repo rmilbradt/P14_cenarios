@@ -14,18 +14,23 @@
 
        <context:component-scan base-package="br.ufsm.csi.p14" />
 
-       <mvc:interceptors>
+       <!--<mvc:interceptors>
               <mvc:interceptor>
                      <mvc:mapping path="/**" />
                      <bean class="br.ufsm.csi.p14.spring.AutenticacaoInterceptor" />
               </mvc:interceptor>
-       </mvc:interceptors>
+       </mvc:interceptors>-->
 
        <tx:annotation-driven transaction-manager="transactionManager"/>
        <bean id="transactionManager"
              class="org.springframework.orm.hibernate4.HibernateTransactionManager">
               <property name="sessionFactory" ref="sessionFactory"></property>
        </bean>
+
+        <bean id="multipartResolver"
+              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+            <property name="maxUploadSize" value="2097152"/>
+        </bean>
 
        <bean id="sessionFactory"
              class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

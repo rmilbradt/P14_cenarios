@@ -4,8 +4,10 @@
 
 <hibernate-configuration>
     <session-factory>
-
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
         <mapping class="br.ufsm.csi.p14.model.Produtor"/>
-
+        <mapping class="br.ufsm.csi.p14.model.Custos"/>
+        <mapping class="br.ufsm.csi.p14.model.RegimeOperacional"/>
+        <mapping class="br.ufsm.csi.p14.model.ValoresTarifa"/>
     </session-factory>
 </hibernate-configuration>

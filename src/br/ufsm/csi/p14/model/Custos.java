@@ -1,9 +1,6 @@
 package br.ufsm.csi.p14.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by politecnico on 03/07/2015.
@@ -20,23 +17,54 @@ public class Custos {
     private Float cofins;
     private Float icmsMenos500;
     private Float icmsMais500;
-    private Float custoKWhPrimeiros500;
-    private Float custoKWhAcima500;
+    private Float custoKWhVerde;
+    private Float custoKWhAmarela;
+    private Float custoKWhVermelha;
 
-    public Float getCustoKWhPrimeiros500() {
-        return custoKWhPrimeiros500;
+    public Float getCustoKWh(BandeiraTarifaria bandeiraTarifaria) {
+        if (bandeiraTarifaria == BandeiraTarifaria.VERDE) {
+            return getCustoKWhVerde();
+        } else if (bandeiraTarifaria == BandeiraTarifaria.AMARELA) {
+            return getCustoKWhAmarela();
+        } else {
+            return getCustoKWhVermelha();
+        }
     }
 
-    public void setCustoKWhPrimeiros500(Float custoKWhPrimeiros500) {
-        this.custoKWhPrimeiros500 = custoKWhPrimeiros500;
+    public Float getCustoKWhVerde() {
+        return custoKWhVerde;
     }
 
-    public Float getCustoKWhAcima500() {
-        return custoKWhAcima500;
+    public void setCustoKWhVerde(Float custoKWhVerde) {
+        this.custoKWhVerde = custoKWhVerde;
     }
 
-    public void setCustoKWhAcima500(Float custoKWhAcima500) {
-        this.custoKWhAcima500 = custoKWhAcima500;
+    public Float getCustoKWhAmarela() {
+        return custoKWhAmarela;
+    }
+
+    public void setCustoKWhAmarela(Float custoKWhAmarela) {
+        this.custoKWhAmarela = custoKWhAmarela;
+    }
+
+    public Float getCustoKWhVermelha() {
+        return custoKWhVermelha;
+    }
+
+    public void setCustoKWhVermelha(Float custoKWhVermelha) {
+        this.custoKWhVermelha = custoKWhVermelha;
+    }
+
+    public enum BandeiraTarifaria { VERDE, AMARELA, VERMELHA }
+
+    @Transient
+    public Float getCustoKWhPrimeiros500(BandeiraTarifaria bandeiraTarifaria) {
+        return (getCustoKWh(bandeiraTarifaria) / ((100-(getPis() + getCofins() + getIcmsMenos500())) / 100));
+    }
+
+    @Transient
+    public Float getCustoKWhAcima500(BandeiraTarifaria bandeiraTarifaria) {
+        return (getCustoKWh(bandeiraTarifaria) / ((100-(getPis() + getCofins() + getIcmsMais500())) / 100));
     }
 
     public Long getId() {
