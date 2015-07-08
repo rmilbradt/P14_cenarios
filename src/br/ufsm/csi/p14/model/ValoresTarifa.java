@@ -26,8 +26,8 @@ public class ValoresTarifa {
     @Transient
     private Custos custos;
 
-    enum NomesTarifas { VERDE, AZUL, CONVENCIONAL }
-    enum TiposCusto { NA, PONTA, FORA_PONTA }
+    public enum NomesTarifas { VERDE, AZUL, CONVENCIONAL }
+    public enum TiposCusto { NA, PONTA, FORA_PONTA }
 
     public Custos getCustos() {
         return custos;
