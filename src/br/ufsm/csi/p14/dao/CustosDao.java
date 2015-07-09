@@ -1,5 +1,6 @@
 package br.ufsm.csi.p14.dao;
 
+import br.ufsm.csi.p14.model.Custos;
 import br.ufsm.csi.p14.model.ValoresTarifa;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -23,13 +24,36 @@ public class CustosDao {
     @Transactional
     public Collection<ValoresTarifa> findTarifas() {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ValoresTarifa.class);
-        criteria.addOrder(Order.asc("nomeTarifa")).addOrder(Order.asc("tipoCusto"));
+        criteria.addOrder(Order.asc("id"));
         Collection<ValoresTarifa> tarifas = criteria.list();
         if (tarifas != null && !tarifas.isEmpty()) {
             return tarifas;
         } else {
             return criaTodasTarifas();
         }
+    }
+
+    @Transactional
+    public Custos getCustos() {
+        Custos c = (Custos) sessionFactory.getCurrentSession().get(Custos.class, 1l);
+        if (c != null) {
+            return c;
+        }
+        return criaCustos();
+    }
+
+    private Custos criaCustos() {
+        Custos c = new Custos();
+        c.setId(1l);
+        c.setCofins(3.31f);
+        c.setPis(0.72f);
+        c.setIcmsMenos500(12f);
+        c.setIcmsMais500(25f);
+        c.setCustoKWhVerde(0.2873f);
+        c.setCustoKWhAmarela(0.3123f);
+        c.setCustoKWhVermelha(0.3423f);
+        save(c);
+        return c;
     }
 
     private Collection<ValoresTarifa> criaTodasTarifas() {
@@ -104,7 +128,13 @@ public class CustosDao {
         return ret;
     }
 
-    public void save(ValoresTarifa valoresTarifa) {
-        sessionFactory.getCurrentSession().saveOrUpdate(valoresTarifa);
+    @Transactional
+    public void save(Object o) {
+        sessionFactory.getCurrentSession().saveOrUpdate(o);
+    }
+
+    @Transactional
+    public ValoresTarifa findTarifaById(Long id) {
+        return (ValoresTarifa) sessionFactory.getCurrentSession().get(ValoresTarifa.class, id);
     }
 }

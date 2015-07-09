@@ -1,1 +1,1 @@
-<% response.sendRedirect("hello.html"); %>
+<% response.sendRedirect("inicia-simulacao.html"); %>

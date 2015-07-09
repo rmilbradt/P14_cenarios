@@ -1,5 +1,7 @@
 package br.ufsm.csi.p14.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
 
 /**
@@ -10,15 +12,27 @@ import javax.persistence.*;
 public class Custos {
 
     @Id
-    @GeneratedValue
     private Long id;
 
+    @NumberFormat(pattern = "0.00")
     private Float pis;
+
+    @NumberFormat(pattern = "0.00")
     private Float cofins;
+
+    @NumberFormat(pattern = "#0.#")
     private Float icmsMenos500;
+
+    @NumberFormat(pattern = "#0.#")
     private Float icmsMais500;
+
+    @NumberFormat(pattern = "#0.0000")
     private Float custoKWhVerde;
+
+    @NumberFormat(pattern = "#0.0000")
     private Float custoKWhAmarela;
+
+    @NumberFormat(pattern = "#0.0000")
     private Float custoKWhVermelha;
 
     public Float getCustoKWh(BandeiraTarifaria bandeiraTarifaria) {

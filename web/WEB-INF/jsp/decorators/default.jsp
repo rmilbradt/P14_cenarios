@@ -32,7 +32,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="leitura.html" style="font-size: 27px;"><b>Simulação</b></a>
+        <a class="navbar-brand" href="inicia-simulacao.html" style="font-size: 27px;"><b>Projeto P14 - Simulação de Cenários</b></a>
       </div>
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -40,15 +40,12 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size: 16px;">Configurações<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="tarifas.html">Tarifas</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="impostos.html">Impostos</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="custos.html">Custos</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="carregarProdutores.html">Produtores</a></li>
+              <li><a href="carregar-produtores.html">Produtores</a></li>
+              <li><a href="listar-tarifas.html">Tarifas</a></li>
+              <li><a href="editar-custos.html">Outros Custos</a></li>
+
               <%--<li role="separator" class="divider"></li>--%>
-              <%--<li><a href="relatorioOutros.html">Outros</a></li>--%>
+
             </ul>
           </li>
         </ul>

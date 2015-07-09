@@ -44,6 +44,7 @@ public class CarregarProdutoresController {
                     dao.save(produtor);
                 } catch (Exception e) { }
             }
+            model.addAttribute("sucesso", "Produtores carregados.");
         }
         model.addAttribute("produtores", dao.findProdutores());
         return "carregar-produtores";

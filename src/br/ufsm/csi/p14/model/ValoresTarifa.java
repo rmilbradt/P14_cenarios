@@ -1,6 +1,9 @@
 package br.ufsm.csi.p14.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by politecnico on 03/07/2015.
@@ -15,9 +18,21 @@ public class ValoresTarifa {
 
     //verde, azul ou convencional
     private String nomeTarifa;
+
+    @NumberFormat(pattern = "#0.00000", style = NumberFormat.Style.NUMBER)
+    @NotNull(message = "Preencha o valor da demanda.")
     private Float demanda;
+
+    @NumberFormat(pattern = "#0.00000", style = NumberFormat.Style.NUMBER)
+    @NotNull(message = "Preencha o valor da energia em bandeira verde.")
     private Float energiaBandVerde;
+
+    @NumberFormat(pattern = "#0.00000", style = NumberFormat.Style.NUMBER)
+    @NotNull(message = "Preencha o valor da energia em bandeira amarela.")
     private Float energiaBandAmarela;
+
+    @NumberFormat(pattern = "#0.00000", style = NumberFormat.Style.NUMBER)
+    @NotNull(message = "Preencha o valor da energia em bandeira vermelha.")
     private Float energiaBandVermelha;
 
     //na, ponta e fora de ponta
