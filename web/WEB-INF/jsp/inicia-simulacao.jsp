@@ -8,10 +8,11 @@
       function iniciarSimulacao() {
         var reg = $(regime).val();
         var tar = $(tarifa).val();
-        if (reg != null && reg != '' && tar != null && tar != '') {
+        var band = $(bandeira).val();
+        if (reg != null && reg != '' && tar != null && tar != '' && band != null && band != '') {
           document.getElementById('carreg').style.display = 'block';
           $.ajax({
-            url: "simulacao.ajax?regime="+reg+"&tarifa="+tar,
+            url: "simulacao.ajax?regime="+reg+"&tarifa="+tar + "&bandeira=" + band,
             context: document.body,
             success: function(result) {
                  document.getElementById('conteudo-simulacao').innerHTML = result;
@@ -43,6 +44,15 @@
           <option></option>
           <c:forEach items="${tarifas}" var="tarifa">
             <option value="${tarifa}">${tarifa}</option>
+          </c:forEach>
+        </select>
+      </div>
+      <div class="col-lg-2">
+        <label for="bandeira">Bandeira</label>
+        <select id="bandeira" name="bandeira" class="form-control">
+          <option></option>
+          <c:forEach items="${bandeiras}" var="bandeira">
+            <option value="${bandeira}">${bandeira}</option>
           </c:forEach>
         </select>
       </div>

@@ -20,7 +20,7 @@ public class RegimeOperacional {
     @Transient
     private ValoresTarifa.NomesTarifas nomeTarifa;
     @Transient
-    private Map<String, Map<String, ValoresTarifa>> valoresTarifa;
+    private Map<ValoresTarifa.NomesTarifas, Map<ValoresTarifa.TiposCusto, ValoresTarifa>> valoresTarifa;
     @Transient
     private Custos custos;
 
@@ -32,11 +32,11 @@ public class RegimeOperacional {
         this.nomeTarifa = nomeTarifa;
     }
 
-    public Map<String, Map<String, ValoresTarifa>> getValoresTarifa() {
+    public Map<ValoresTarifa.NomesTarifas, Map<ValoresTarifa.TiposCusto, ValoresTarifa>> getValoresTarifa() {
         return valoresTarifa;
     }
 
-    public void setValoresTarifa(Map<String, Map<String, ValoresTarifa>> valoresTarifa) {
+    public void setValoresTarifa(Map<ValoresTarifa.NomesTarifas, Map<ValoresTarifa.TiposCusto, ValoresTarifa>> valoresTarifa) {
         this.valoresTarifa = valoresTarifa;
     }
 
@@ -92,7 +92,7 @@ public class RegimeOperacional {
     private Float getCustoDisponibilidadeAzul() {
         if (getQtdHoras() == 24) {
             return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.FORA_PONTA).getValorFinalDemanda()) +
-                    (getNumProdutores() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.PONTA).getValorFinalDemanda());
+                    (30f * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.PONTA).getValorFinalDemanda());
         } else {
             return (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.AZUL).get(ValoresTarifa.TiposCusto.FORA_PONTA).getValorFinalDemanda());
         }

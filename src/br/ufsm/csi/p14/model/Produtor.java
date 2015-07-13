@@ -110,7 +110,7 @@ public class Produtor {
     @Transient
     public Float getCusto() {
         if (getConsumo() > 500f) {
-            return (getConsumo() - 500f * getRegime().getCustos().getCustoKWhAcima500(getBandeiraTarifaria())) + 500f * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
+            return ((getConsumo() - 500f) * getRegime().getCustos().getCustoKWhAcima500(getBandeiraTarifaria())) + (500f * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria()));
         } else {
             return getConsumo() * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
         }
@@ -123,7 +123,11 @@ public class Produtor {
 
     @Transient
     public Float getCustoDisponibilidade() {
-        return getConsumoMinimo() * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
+        return (getConsumoMinimo() == null ? 0f : getConsumoMinimo()) * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
+    }
+
+    public Float getReducao() {
+        return getCusto() - getCotaParte();
     }
 
 }

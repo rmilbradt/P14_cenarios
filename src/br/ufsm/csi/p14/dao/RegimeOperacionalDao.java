@@ -1,6 +1,7 @@
 package br.ufsm.csi.p14.dao;
 
 import br.ufsm.csi.p14.model.RegimeOperacional;
+import br.ufsm.csi.p14.model.ValoresTarifa;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by politecnico on 10/07/2015.
@@ -22,6 +25,9 @@ public class RegimeOperacionalDao {
 
     @Autowired
     private ProdutoresDao produtoresDao;
+
+    @Autowired
+    private CustosDao custosDao;
 
     @Transactional
     public Collection<RegimeOperacional> findRegimesOperacionais() {
@@ -67,6 +73,29 @@ public class RegimeOperacionalDao {
     @Transactional
     public void save(Object o) {
         sessionFactory.getCurrentSession().saveOrUpdate(o);
+    }
+
+    @Transactional
+    public RegimeOperacional getRegimeOperacional(Long regime, String tarifa) {
+        RegimeOperacional reg = (RegimeOperacional) sessionFactory.getCurrentSession().get(RegimeOperacional.class, regime);
+        reg.setNumProdutores(produtoresDao.getNumProdutores());
+        reg.setNomeTarifa(ValoresTarifa.NomesTarifas.valueOf(tarifa));
+        reg.setCustos(custosDao.getCustos());
+        Map<ValoresTarifa.NomesTarifas, Map<ValoresTarifa.TiposCusto, ValoresTarifa>> map = new HashMap<>();
+        for (ValoresTarifa valores : custosDao.findTarifas()) {
+            Map<ValoresTarifa.TiposCusto, ValoresTarifa> m = map.get(ValoresTarifa.NomesTarifas.valueOf(valores.getNomeTarifa()));
+            valores.setCustos(reg.getCustos());
+            if (m == null) {
+                m = new HashMap<>();
+                map.put(ValoresTarifa.NomesTarifas.valueOf(valores.getNomeTarifa()), m);
+            }
+            if (valores.getTipoCusto() == null) {
+                valores.setTipoCusto(ValoresTarifa.TiposCusto.NA.name());
+            }
+            m.put(ValoresTarifa.TiposCusto.valueOf(valores.getTipoCusto()), valores);
+        }
+        reg.setValoresTarifa(map);
+        return reg;
     }
 
 }

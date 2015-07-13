@@ -39,7 +39,7 @@ public class CarregarProdutoresController {
                     produtor.setTensaoNominal(linha[2]);
                     produtor.setGrupoTensao(linha[3]);
                     produtor.setClassificacao(linha[4]);
-                    produtor.setConsumoMinimo(Float.parseFloat(linha[5]));
+                    try { produtor.setConsumoMinimo(Float.parseFloat(linha[5])); } catch (Exception ex) { }
                     produtor.setConsumo(Float.parseFloat(linha[6]));
                     dao.save(produtor);
                 } catch (Exception e) { }

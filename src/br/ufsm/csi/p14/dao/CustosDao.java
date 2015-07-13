@@ -117,7 +117,7 @@ public class CustosDao {
         //CONVENCIONAL
         valoresTarifa = new ValoresTarifa();
         valoresTarifa.setNomeTarifa(ValoresTarifa.NomesTarifas.CONVENCIONAL.name());
-        valoresTarifa.setTipoCusto(null);
+        valoresTarifa.setTipoCusto(ValoresTarifa.TiposCusto.NA.name());
         valoresTarifa.setDemanda(26.42f);
         valoresTarifa.setEnergiaBandVerde(0.32035f);
         valoresTarifa.setEnergiaBandAmarela(0.34535f);

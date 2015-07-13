@@ -13,6 +13,7 @@
     <div class="row">
       <table class="table table-striped">
         <tr>
+          <th>#</th>
           <th>Produtor</th>
           <th>Cód. UC</th>
           <th>Tensão Nominal (V)</th>
@@ -21,8 +22,9 @@
           <th>Consumo mínimo (kWh)</th>
           <th>Consumo (kWh)</th>
         </tr>
-        <c:forEach items="${produtores}" var="produtor">
+        <c:forEach items="${produtores}" var="produtor" varStatus="st">
           <tr>
+            <td>${st.count}</td>
             <td>${produtor.nome}</td>
             <td>${produtor.codigoUC}</td>
             <td>${produtor.tensaoNominal}</td>
