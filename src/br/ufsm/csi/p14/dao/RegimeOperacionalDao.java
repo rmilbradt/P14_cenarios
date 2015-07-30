@@ -47,6 +47,8 @@ public class RegimeOperacionalDao {
         regimeOperacional.setNome("24 horas - 140kW");
         regimeOperacional.setQtdHoras(24);
         regimeOperacional.setPotencia(140f);
+        regimeOperacional.setCustoInvestimento(500000f);
+        regimeOperacional.setCustoRH(8000f);
         regimeOperacional.setNumProdutores(produtoresDao.getNumProdutores());
         save(regimeOperacional);
         regimes.add(regimeOperacional);
@@ -55,6 +57,8 @@ public class RegimeOperacionalDao {
         regimeOperacional.setNome("21 horas - 160kW");
         regimeOperacional.setQtdHoras(21);
         regimeOperacional.setPotencia(160f);
+        regimeOperacional.setCustoInvestimento(500000f);
+        regimeOperacional.setCustoRH(8000f);
         regimeOperacional.setNumProdutores(produtoresDao.getNumProdutores());
         save(regimeOperacional);
         regimes.add(regimeOperacional);
@@ -63,6 +67,8 @@ public class RegimeOperacionalDao {
         regimeOperacional.setNome("7 horas - 480kW");
         regimeOperacional.setQtdHoras(7);
         regimeOperacional.setPotencia(480f);
+        regimeOperacional.setCustoInvestimento(500000f);
+        regimeOperacional.setCustoRH(8000f);
         regimeOperacional.setNumProdutores(produtoresDao.getNumProdutores());
         save(regimeOperacional);
         regimes.add(regimeOperacional);
@@ -73,6 +79,11 @@ public class RegimeOperacionalDao {
     @Transactional
     public void save(Object o) {
         sessionFactory.getCurrentSession().saveOrUpdate(o);
+    }
+
+    @Transactional
+    public RegimeOperacional getRegimeOperacionalById(Long id) {
+        return (RegimeOperacional) sessionFactory.getCurrentSession().get(RegimeOperacional.class, id);
     }
 
     @Transactional
@@ -98,4 +109,8 @@ public class RegimeOperacionalDao {
         return reg;
     }
 
+    @Transactional
+    public void removeRegime(RegimeOperacional regimeOperacional) {
+        sessionFactory.getCurrentSession().delete(regimeOperacional);
+    }
 }

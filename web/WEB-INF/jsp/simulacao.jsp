@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:if test="${not empty produtores}">
-    <div class="page-header">
+    <div class="container page-header">
         <h2>Produtores</h2>
     </div>
 

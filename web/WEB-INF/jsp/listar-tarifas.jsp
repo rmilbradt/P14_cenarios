@@ -6,8 +6,8 @@
 <body>
 
 <c:if test="${not empty tarifas}">
-  <div class="page-header">
-    <h2>Valores de Tarifas</h2>
+  <div class="container page-header">
+    <h1>Valores de Tarifas</h1>
   </div>
 
   <div class="row">
@@ -29,7 +29,9 @@
           <td style="text-align: right;"><fmt:formatNumber value="${tarifa.energiaBandVerde}" pattern="#0.00000" /></td>
           <td style="text-align: right;"><fmt:formatNumber value="${tarifa.energiaBandAmarela}" pattern="#0.00000" /></td>
           <td style="text-align: right;"><fmt:formatNumber value="${tarifa.energiaBandVermelha}" pattern="#0.00000" /></td>
-          <td style="text-align: center;"><a href="editar-tarifa.html?id=${tarifa.id}">[Editar]</a></td>
+          <td style="text-align: center;">
+            <a href="editar-tarifa.html?id=${tarifa.id}" class="btn btn-sm btn-primary" >Editar</a>
+          </td>
         </tr>
       </c:forEach>
     </table>

@@ -6,8 +6,8 @@
 <body>
 
 
-<div class="page-header">
-  <h2>Editar Tarifa</h2>
+<div class="container page-header">
+  <h1>Editar Tarifa</h1>
 </div>
 
 
@@ -44,7 +44,7 @@
   </div>
   <div class="row">
     <div class="col-lg-3" style="padding-top: 15px;">
-      <button type="submit" class="btn btn-xs btn-default">Enviar</button>
+      <button type="submit" class="btn btn-sm btn-primary">Enviar</button>
     </div>
   </div>
 </form:form>

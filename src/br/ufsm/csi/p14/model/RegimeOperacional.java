@@ -1,6 +1,9 @@
 package br.ufsm.csi.p14.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 /**
@@ -13,8 +16,15 @@ public class RegimeOperacional {
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotNull(message = "Preencha o nome.")
     private String nome;
+
+    @NumberFormat(pattern = "#0", style = NumberFormat.Style.NUMBER)
+    @NotNull(message = "Preencha a potência.")
     private Float potencia;
+
+    @NotNull(message = "Preencha a quantidade de horas.")
     private Integer qtdHoras;
     private Integer numProdutores;
     @Transient
@@ -23,6 +33,30 @@ public class RegimeOperacional {
     private Map<ValoresTarifa.NomesTarifas, Map<ValoresTarifa.TiposCusto, ValoresTarifa>> valoresTarifa;
     @Transient
     private Custos custos;
+
+    @NotNull(message = "Preencha o custo do investimento.")
+    @NumberFormat(pattern = "#,##0.00", style = NumberFormat.Style.NUMBER)
+    private Float custoInvestimento;
+
+    @NotNull(message = "Preencha o custo mensal com recursos humanos.")
+    @NumberFormat(pattern = "#,##0.00", style = NumberFormat.Style.NUMBER)
+    private Float custoRH;
+
+    public Float getCustoInvestimento() {
+        return custoInvestimento;
+    }
+
+    public void setCustoInvestimento(Float custoInvestimento) {
+        this.custoInvestimento = custoInvestimento;
+    }
+
+    public Float getCustoRH() {
+        return custoRH;
+    }
+
+    public void setCustoRH(Float custoRH) {
+        this.custoRH = custoRH;
+    }
 
     public ValoresTarifa.NomesTarifas getNomeTarifa() {
         return nomeTarifa;
@@ -121,7 +155,11 @@ public class RegimeOperacional {
 
     @Transient
     public Float getCotaParte() {
-        return getCustoDisponibilidade() / getNumProdutores();
+        return (getCustoDisponibilidade() + getCustoManutencao()) / getNumProdutores();
+    }
+
+    public Float getCustoManutencao() {
+        return (getCustoInvestimento() / 100f) + getCustoRH() + (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
     }
 
 }

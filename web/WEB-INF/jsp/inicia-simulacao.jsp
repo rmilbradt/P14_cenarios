@@ -19,14 +19,26 @@
             }
           }).done(function() {
             document.getElementById('carreg').style.display = 'none';
+            document.getElementById('jumbo').style.display = 'none';
           });
         }
       }
     </script>
       </head>
   <body>
-    <div class="page-header">
-      <h2>Iniciar Simulação</h2>
+    <div class="jumbotron" style="height: 300px;" id="jumbo">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>Projeto P14</h1>
+          <p>ipsun lorem</p>
+        </div>
+        <div class="col-md-6">
+          <img src="img/logo_grande.png" />
+        </div>
+      </div>
+    </div>
+    <div class="container page-header">
+      <h1>Iniciar Simulação</h1>
     </div>
     <div class="row">
       <div class="col-lg-2">
@@ -58,9 +70,10 @@
       </div>
       <div class="col-lg-1" >
         <p>&nbsp;</p>
-        <button type="button" class="btn btn-sm btn-default" style="vertical-align: text-bottom;" onclick="iniciarSimulacao();">Simular Cenário</button>
+        <button type="button" class="btn btn-sm btn-primary" style="vertical-align: text-bottom;" onclick="iniciarSimulacao();">Simular Cenário</button>
       </div>
     </div>
+    <div class="container" align="center" style="display: none;" id="carreg"><img src="img/carregando.gif"/></div>
     <div class="container" id="conteudo-simulacao"></div>
   </body>
 </html>

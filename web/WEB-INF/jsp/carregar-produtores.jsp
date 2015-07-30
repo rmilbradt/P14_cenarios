@@ -6,8 +6,8 @@
 <body>
 
   <c:if test="${not empty produtores}">
-    <div class="page-header">
-      <h2>Produtores</h2>
+    <div class="container page-header">
+      <h1>Produtores</h1>
     </div>
 
     <div class="row">
@@ -42,7 +42,7 @@
     <h3>Carregar produtores</h3>
     <form action="carregar-produtores.html" method="POST" enctype="multipart/form-data">
       <p>Arquivo CSV: <input name="file" type="file" /> </p>
-      <p><button type="submit" class="btn btn-xs btn-default">Carregar</button></p>
+      <p><button type="submit" class="btn btn-sm btn-primary">Carregar</button></p>
     </form>
   </div>
 </body>
