@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-md-6">
           <h1>Projeto P14</h1>
-          <p>ipsun lorem</p>
+          <p>Simulação de cenários comerciais para operação de MCTs.</p>
         </div>
         <div class="col-md-6">
           <img src="img/logo_grande.png" />
@@ -40,37 +40,39 @@
     <div class="container page-header">
       <h1>Iniciar Simulação</h1>
     </div>
-    <div class="row">
-      <div class="col-lg-2">
-        <label for="regime">Regime de Operação</label>
-        <select id="regime" name="regime" class="form-control">
-          <option></option>
-          <c:forEach items="${regimes}" var="regime">
-            <option value="${regime.id}">${regime.nome}</option>
-          </c:forEach>
-        </select>
-      </div>
-      <div class="col-lg-2">
-        <label for="tarifa">Tarifa</label>
-        <select id="tarifa" name="tafira" class="form-control">
-          <option></option>
-          <c:forEach items="${tarifas}" var="tarifa">
-            <option value="${tarifa}">${tarifa}</option>
-          </c:forEach>
-        </select>
-      </div>
-      <div class="col-lg-2">
-        <label for="bandeira">Bandeira</label>
-        <select id="bandeira" name="bandeira" class="form-control">
-          <option></option>
-          <c:forEach items="${bandeiras}" var="bandeira">
-            <option value="${bandeira}">${bandeira}</option>
-          </c:forEach>
-        </select>
-      </div>
-      <div class="col-lg-1" >
-        <p>&nbsp;</p>
-        <button type="button" class="btn btn-sm btn-primary" style="vertical-align: text-bottom;" onclick="iniciarSimulacao();">Simular Cenário</button>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="regime">Regime de Operação</label>
+          <select id="regime" name="regime" class="form-control">
+            <option></option>
+            <c:forEach items="${regimes}" var="regime">
+              <option value="${regime.id}">${regime.nome}</option>
+            </c:forEach>
+          </select>
+        </div>
+        <div class="col-lg-2">
+          <label for="tarifa">Tarifa</label>
+          <select id="tarifa" name="tafira" class="form-control">
+            <option></option>
+            <c:forEach items="${tarifas}" var="tarifa">
+              <option value="${tarifa}">${tarifa}</option>
+            </c:forEach>
+          </select>
+        </div>
+        <div class="col-lg-2">
+          <label for="bandeira">Bandeira</label>
+          <select id="bandeira" name="bandeira" class="form-control">
+            <option></option>
+            <c:forEach items="${bandeiras}" var="bandeira">
+              <option value="${bandeira}">${bandeira}</option>
+            </c:forEach>
+          </select>
+        </div>
+        <div class="col-lg-1" >
+          <p>&nbsp;</p>
+          <button type="button" class="btn btn-sm btn-primary" style="vertical-align: text-bottom;" onclick="iniciarSimulacao();">Simular Cenário</button>
+        </div>
       </div>
     </div>
     <div class="container" align="center" style="display: none;" id="carreg"><img src="img/carregando.gif"/></div>
