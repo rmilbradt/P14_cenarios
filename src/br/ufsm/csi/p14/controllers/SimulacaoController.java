@@ -11,7 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by politecnico on 09/07/2015.
@@ -40,11 +43,18 @@ public class SimulacaoController {
         RegimeOperacional regimeOperacional = dao.getRegimeOperacional(regime, tarifa);
         model.addAttribute("regimeOperacional", regimeOperacional);
         Collection<Produtor> produtores = produtoresDao.findProdutores();
+        Map<String, Collection<Produtor>> mapProdutores = new HashMap<>();
         for (Produtor produtor : produtores) {
+            Collection<Produtor> col = mapProdutores.get(produtor.getNomePropriedade());
+            if (col == null) {
+                col = new ArrayList<>();
+                mapProdutores.put(produtor.getNomePropriedade(), col);
+            }
+            col.add(produtor);
             produtor.setRegime(regimeOperacional);
             produtor.setBandeiraTarifaria(Custos.BandeiraTarifaria.valueOf(bandeira));
         }
-        model.addAttribute("produtores", produtores);
+        model.addAttribute("mapProdutores", mapProdutores);
         model.addAttribute("custoAbaixo500", regimeOperacional.getCustos().getCustoKWhPrimeiros500(Custos.BandeiraTarifaria.valueOf(bandeira)));
         model.addAttribute("custoAcima500", regimeOperacional.getCustos().getCustoKWhAcima500(Custos.BandeiraTarifaria.valueOf(bandeira)));
         return "simulacao";

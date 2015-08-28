@@ -26,6 +26,24 @@ public class Produtor {
     private Custos.BandeiraTarifaria bandeiraTarifaria;
     private String grupoTensao;
     private String classificacao;
+    private Double volumeBiogas;
+    private String nomePropriedade;
+
+    public Double getVolumeBiogas() {
+        return volumeBiogas;
+    }
+
+    public void setVolumeBiogas(Double volumeBiogas) {
+        this.volumeBiogas = volumeBiogas;
+    }
+
+    public String getNomePropriedade() {
+        return nomePropriedade;
+    }
+
+    public void setNomePropriedade(String nomePropriedade) {
+        this.nomePropriedade = nomePropriedade;
+    }
 
     public String getGrupoTensao() {
         return grupoTensao;
@@ -124,6 +142,16 @@ public class Produtor {
     @Transient
     public Float getCustoDisponibilidade() {
         return (getConsumoMinimo() == null ? 0f : getConsumoMinimo()) * getRegime().getCustos().getCustoKWhPrimeiros500(getBandeiraTarifaria());
+    }
+
+    @Transient
+    public Float getCustoOperacional() {
+        return getRegime().getCustoOperacional();
+    }
+
+    @Transient
+    public Float getCustoOperacionalTotal() {
+        return getRegime().getCustoOperacionalTotal();
     }
 
     public Float getReducao() {

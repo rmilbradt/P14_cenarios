@@ -155,11 +155,15 @@ public class RegimeOperacional {
 
     @Transient
     public Float getCotaParte() {
-        return (getCustoDisponibilidade() + getCustoManutencao()) / getNumProdutores();
+        return (getCustoDisponibilidade() / getNumProdutores()) + getCustoOperacional();
     }
 
-    public Float getCustoManutencao() {
-        return (getCustoInvestimento() / 100f) + getCustoRH() + (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda());
+    public Float getCustoOperacional() {
+        return ((getCustoInvestimento() / 100f) + getCustoRH() + (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda())) / getNumProdutores();
+    }
+
+    public Float getCustoOperacionalTotal() {
+        return ((getCustoInvestimento() / 100f) + getCustoRH() + (getPotencia() * valoresTarifa.get(ValoresTarifa.NomesTarifas.VERDE).get(ValoresTarifa.TiposCusto.NA).getValorFinalDemanda()));
     }
 
 }

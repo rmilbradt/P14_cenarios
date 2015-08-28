@@ -14,6 +14,7 @@
       <table class="table table-striped">
         <tr>
           <th>#</th>
+          <th>Nome Propriedade</th>
           <th>Produtor</th>
           <th>Cód. UC</th>
           <th>Tensão Nominal (V)</th>
@@ -21,10 +22,12 @@
           <th>Classificação</th>
           <th>Consumo mínimo (kWh)</th>
           <th>Consumo (kWh)</th>
+          <th>Volume Biogás (m³)</th>
         </tr>
         <c:forEach items="${produtores}" var="produtor" varStatus="st">
           <tr>
             <td>${st.count}</td>
+            <td>${produtor.nomePropriedade}</td>
             <td>${produtor.nome}</td>
             <td>${produtor.codigoUC}</td>
             <td>${produtor.tensaoNominal}</td>
@@ -32,6 +35,7 @@
             <td>${produtor.classificacao}</td>
             <td><fmt:formatNumber value="${produtor.consumoMinimo}" pattern="#0" /></td>
             <td><fmt:formatNumber value="${produtor.consumo}" pattern="#0" /></td>
+            <td><fmt:formatNumber value="${produtor.volumeBiogas}" pattern="#0.00" /></td>
           </tr>
         </c:forEach>
       </table>
